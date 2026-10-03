@@ -1,0 +1,19 @@
+{
+  "name": "Agroservicio La Cosecha",
+  "short_name": "La Cosecha",
+  "description": "Catálogo móvil de insumos agrícolas y solicitud de cotizaciones.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F4F8EE",
+  "theme_color": "#2E6B30",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "img/icono.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
