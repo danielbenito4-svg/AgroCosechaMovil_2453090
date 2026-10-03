@@ -58,6 +58,22 @@ jobs:
           if git diff --cached --quiet; then
             echo "No hay cambios en las capturas."
           else
-            git commit -m "Agrega capturas reales de catalogo cotizacion escritorio y git log"
+            git commit -m "Actualiza capturas reales de catalogo cotizacion escritorio y git log"
+            git pull --rebase origin main
             git push
           fi
+
+      - name: Preparar ZIP para Classroom
+        run: |
+          rm -rf /tmp/AgroCosechaMovil_2453090
+          mkdir -p /tmp/AgroCosechaMovil_2453090
+          rsync -a --exclude 'bin/' --exclude 'obj/' --exclude 'node_modules/' --exclude '*.zip' ./ /tmp/AgroCosechaMovil_2453090/
+          cd /tmp
+          zip -r AgroCosechaMovil_2453090.zip AgroCosechaMovil_2453090
+
+      - name: Publicar ZIP como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: AgroCosechaMovil_2453090
+          path: /tmp/AgroCosechaMovil_2453090.zip
+          if-no-files-found: error
