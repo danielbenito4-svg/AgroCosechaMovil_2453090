@@ -57,7 +57,8 @@ Si los datos son válidos, el servidor calcula el subtotal, aplica un 5 % de des
 La aplicación incluye:
 
 - `wwwroot/manifest.json` con nombre, nombre corto y colores de la marca;
-- `wwwroot/img/icono.svg` como icono propio;
+- `wwwroot/img/icono.svg` como icono propio solicitado en la guía;
+- `wwwroot/img/icon-192.png` y `wwwroot/img/icon-512.png` como variantes PNG usadas por el manifest;
 - `wwwroot/sw.js` para guardar archivos estáticos en caché;
 - exclusión explícita de `/api/` del caché del service worker.
 
@@ -67,7 +68,7 @@ https://github.com/danielbenito4-svg/AgroCosechaMovil_2453090
 
 ## Evidencias
 
-La carpeta `capturas/` debe contener:
+La carpeta `capturas/` contiene las evidencias requeridas; la captura `04_pwa.png` se agrega al finalizar la comprobación manual en DevTools:
 
 1. `01_movil_catalogo.png` — vista móvil a 375 px con catálogo y búsqueda.
 2. `02_movil_cotizacion.png` — vista móvil con una cotización y descuento aplicado.
