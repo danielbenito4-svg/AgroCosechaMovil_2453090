@@ -1,0 +1,63 @@
+name: Validar proyecto y generar evidencias
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validar-y-capturar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Instalar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Compilar proyecto
+        run: dotnet build
+
+      - name: Iniciar aplicación
+        run: |
+          dotnet run --urls "http://127.0.0.1:5090" > app.log 2>&1 &
+          echo $! > app.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:5090/api/insumos > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat app.log
+          exit 1
+
+      - name: Instalar Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Generar capturas reales
+        run: node scripts/generar-capturas.mjs
+
+      - name: Limpiar archivo auxiliar
+        run: rm -f capturas/git-log.html
+
+      - name: Guardar capturas en el repositorio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add capturas/01_movil_catalogo.png capturas/02_movil_cotizacion.png capturas/03_escritorio.png capturas/05_git_log.png
+          if git diff --cached --quiet; then
+            echo "No hay cambios en las capturas."
+          else
+            git commit -m "Agrega capturas reales de catalogo cotizacion escritorio y git log"
+            git push
+          fi
