@@ -1,11 +1,10 @@
 // Service worker de Agroservicio La Cosecha.
-const CACHE = 'la-cosecha-v2';
+const CACHE = 'la-cosecha-v6';
 const ARCHIVOS_ESTATICOS = [
   '/',
   '/index.html',
   '/css/estilos.css',
   '/js/app.js',
-  '/manifest.json',
   '/img/icon-192.png',
   '/img/icon-512.png'
 ];
@@ -29,8 +28,8 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // Las respuestas de la API siempre se solicitan a la red y nunca se guardan en caché.
-  if (url.pathname.startsWith('/api/')) {
+  // La API y el manifest siempre se solicitan a la red.
+  if (url.pathname.startsWith('/api/') || url.pathname === '/manifest.json') {
     event.respondWith(fetch(event.request));
     return;
   }

@@ -22,19 +22,5 @@
       "type": "image/png",
       "purpose": "any"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "/img/screenshot-mobile.png",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Catálogo móvil de Agroservicio La Cosecha"
-    },
-    {
-      "src": "/img/screenshot-wide.png",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Vista de escritorio de Agroservicio La Cosecha"
-    }
   ]
 }
