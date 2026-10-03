@@ -11,16 +11,32 @@ const context = await browser.newContext({
 });
 const page = await context.newPage();
 
+async function screenshotExactWidth(page, path, width) {
+  const height = await page.evaluate(() =>
+    Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    )
+  );
+
+  await page.screenshot({
+    path,
+    clip: {
+      x: 0,
+      y: 0,
+      width,
+      height
+    }
+  });
+}
+
 await page.goto('http://127.0.0.1:5090', { waitUntil: 'networkidle' });
 await page.locator('.tarjeta').first().waitFor();
 
-// 01 — catálogo móvil a 375 px con búsqueda visible.
-await page.screenshot({
-  path: 'capturas/01_movil_catalogo.png',
-  fullPage: true
-});
+// 01 - catálogo móvil a 375 px con búsqueda visible.
+await screenshotExactWidth(page, 'capturas/01_movil_catalogo.png', 375);
 
-// 02 — cotización válida con subtotal Q1,290, 5 % de descuento y total Q1,225.50.
+// 02 - cotización válida con subtotal Q1,290, 5 % de descuento y total Q1,225.50.
 await page.locator('#cantidad-3').fill('4');
 await page.locator('button[data-id="3"]').click();
 await page.locator('#cantidad-6').fill('2');
@@ -31,21 +47,15 @@ await page.locator('#telefono').fill('55123456');
 await page.locator('#formCotizacion button[type="submit"]').click();
 await page.getByText('Cotización #1 creada').waitFor();
 
-await page.screenshot({
-  path: 'capturas/02_movil_cotizacion.png',
-  fullPage: true
-});
+await screenshotExactWidth(page, 'capturas/02_movil_cotizacion.png', 375);
 
-// 03 — escritorio a 1100 px para evidenciar las tres columnas.
+// 03 - escritorio a 1100 px para evidenciar las tres columnas.
 await page.setViewportSize({ width: 1100, height: 900 });
 await page.goto('http://127.0.0.1:5090', { waitUntil: 'networkidle' });
 await page.locator('.tarjeta').first().waitFor();
-await page.screenshot({
-  path: 'capturas/03_escritorio.png',
-  fullPage: true
-});
+await screenshotExactWidth(page, 'capturas/03_escritorio.png', 1100);
 
-// 05 — evidencia real del historial Git del repositorio.
+// 05 - evidencia real del historial Git del repositorio.
 const log = execSync('git log --oneline -n 14', { encoding: 'utf8' });
 const escapeHtml = s => s
   .replaceAll('&', '&amp;')
@@ -67,7 +77,7 @@ body { margin:0; background:#111827; color:#e5e7eb; font:18px/1.6 Consolas,Monac
 </head>
 <body>
 <div class="terminal">
-<div class="top">Terminal — AgroCosechaMovil_2453090</div>
+<div class="top">Terminal - AgroCosechaMovil_2453090</div>
 <div class="body"><span class="prompt">$ git log --oneline</span>
 ${escapeHtml(log)}</div>
 </div>
