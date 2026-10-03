@@ -1,4 +1,4 @@
-name: Validar proyecto y generar evidencias
+name: Validar proyecto y preparar evidencias
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  validar-y-capturar:
+  validar:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,10 +23,13 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Generar .gitignore oficial de .NET
+        run: dotnet new gitignore --force
+
       - name: Compilar proyecto
         run: dotnet build
 
-      - name: Iniciar aplicación
+      - name: Iniciar aplicacion
         run: |
           dotnet run --urls "http://127.0.0.1:5090" > app.log 2>&1 &
           echo $! > app.pid
@@ -44,34 +47,61 @@ jobs:
           npm install --no-save playwright
           npx playwright install --with-deps chromium
 
-      - name: Generar capturas reales
+      - name: Generar capturas 01 02 03 y 05
         run: node scripts/generar-capturas.mjs
 
-      - name: Limpiar archivo auxiliar
-        run: rm -f capturas/git-log.html
+      - name: Verificar medidas de capturas
+        run: |
+          python - <<'PY'
+          import struct
 
-      - name: Guardar capturas en el repositorio
+          def width(path):
+              with open(path, "rb") as f:
+                  sig = f.read(24)
+              if sig[:8] != b"\x89PNG\r\n\x1a\n":
+                  raise SystemExit(f"{path} no es PNG")
+              return struct.unpack(">I", sig[16:20])[0]
+
+          expected = {
+              "capturas/01_movil_catalogo.png": 375,
+              "capturas/02_movil_cotizacion.png": 375,
+              "capturas/03_escritorio.png": 1100,
+          }
+
+          for path, wanted in expected.items():
+              got = width(path)
+              print(f"{path}: {got}px")
+              if got != wanted:
+                  raise SystemExit(f"Ancho incorrecto en {path}: {got}px, se esperaba {wanted}px")
+          PY
+
+      - name: Limpiar archivos temporales
+        run: |
+          rm -f capturas/git-log.html
+          rm -f app.log app.pid
+
+      - name: Guardar correcciones en Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add capturas/01_movil_catalogo.png capturas/02_movil_cotizacion.png capturas/03_escritorio.png capturas/05_git_log.png
+          git add .gitignore capturas/01_movil_catalogo.png capturas/02_movil_cotizacion.png capturas/03_escritorio.png capturas/05_git_log.png
           if git diff --cached --quiet; then
-            echo "No hay cambios en las capturas."
+            echo "No hay cambios que guardar."
           else
-            git commit -m "Actualiza capturas reales de catalogo cotizacion escritorio y git log"
+            git commit -m "Ajusta gitignore oficial y evidencias a medidas requeridas"
             git pull --rebase origin main
             git push
           fi
 
-      - name: Preparar ZIP para Classroom
+      - name: Preparar ZIP provisional
         run: |
           rm -rf /tmp/AgroCosechaMovil_2453090
           mkdir -p /tmp/AgroCosechaMovil_2453090
-          rsync -a --exclude 'bin/' --exclude 'obj/' --exclude 'node_modules/' --exclude '*.zip' ./ /tmp/AgroCosechaMovil_2453090/
+          rsync -a             --exclude 'bin/'             --exclude 'obj/'             --exclude 'node_modules/'             --exclude '*.zip'             --exclude 'app.log'             --exclude 'app.pid'             ./ /tmp/AgroCosechaMovil_2453090/
           cd /tmp
           zip -r AgroCosechaMovil_2453090.zip AgroCosechaMovil_2453090
 
-      - name: Publicar ZIP como artefacto
+      - name: Publicar ZIP provisional
         uses: actions/upload-artifact@v4
         with:
           name: AgroCosechaMovil_2453090
