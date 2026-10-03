@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Ícono Agroservicio La Cosecha">
+  <rect width="512" height="512" rx="96" fill="#2E6B30"/>
+  <path d="M260 402c-18-88-8-166 30-232" fill="none" stroke="#F3D34A" stroke-width="26" stroke-linecap="round"/>
+  <path d="M284 192c-72-8-121 28-143 95 72 8 121-28 143-95Z" fill="#A7D46F"/>
+  <path d="M293 257c61-3 100 27 116 82-61 3-100-27-116-82Z" fill="#8FC45A"/>
+  <path d="M286 153c7-49 38-77 85-84-7 49-38 77-85 84Z" fill="#F3D34A"/>
+  <circle cx="167" cy="159" r="34" fill="#F3D34A"/>
+</svg>
