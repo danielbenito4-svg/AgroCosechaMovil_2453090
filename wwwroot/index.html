@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2E6B30">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="img/icono.svg" type="image/svg+xml">
+  <title>Agroservicio La Cosecha</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="barra">
+    <div>
+      <p class="marca-secundaria">Catálogo móvil</p>
+      <h1>🌽 Agroservicio La Cosecha</h1>
+    </div>
+    <input id="buscar" type="search" placeholder="Buscar insumo..." aria-label="Buscar insumo">
+  </header>
+
+  <main class="contenedor">
+    <section aria-labelledby="titulo-categorias">
+      <h2 id="titulo-categorias" class="titulo-seccion">Categorías</h2>
+      <div id="categorias" class="chips" aria-label="Filtro por categoría">
+        <button class="chip activo" data-categoria="">Todas</button>
+        <button class="chip" data-categoria="Semillas">Semillas</button>
+        <button class="chip" data-categoria="Fertilizantes">Fertilizantes</button>
+        <button class="chip" data-categoria="Herramientas">Herramientas</button>
+        <button class="chip" data-categoria="Protección">Protección</button>
+      </div>
+    </section>
+
+    <p id="mensaje" class="mensaje error" hidden></p>
+    <section id="lista" class="lista" aria-live="polite"></section>
+
+    <section class="panel-cotizacion" aria-labelledby="titulo-cotizacion">
+      <div class="encabezado-cotizacion">
+        <div>
+          <p class="marca-secundaria">Solicitud</p>
+          <h2 id="titulo-cotizacion">Mi cotización</h2>
+        </div>
+        <span id="contador" class="contador">0 insumos</span>
+      </div>
+
+      <div id="resumen" class="resumen-vacio">
+        Aún no has agregado insumos.
+      </div>
+
+      <form id="formCotizacion" class="formulario">
+        <label>
+          Nombre del cliente
+          <input id="cliente" name="cliente" type="text" required maxlength="80" placeholder="Ej. Don Pedro Xicay">
+        </label>
+
+        <label>
+          Teléfono
+          <input id="telefono" name="telefono" type="tel" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" required placeholder="8 dígitos">
+        </label>
+
+        <button class="boton-principal" type="submit">Solicitar cotización</button>
+      </form>
+
+      <div id="respuesta" class="respuesta" hidden></div>
+    </section>
+  </main>
+
+  <footer>
+    Agroservicio La Cosecha · Chimaltenango
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
