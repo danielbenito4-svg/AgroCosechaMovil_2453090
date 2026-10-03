@@ -1,12 +1,13 @@
 // Service worker de Agroservicio La Cosecha.
-const CACHE = 'la-cosecha-v1';
+const CACHE = 'la-cosecha-v2';
 const ARCHIVOS_ESTATICOS = [
   '/',
   '/index.html',
   '/css/estilos.css',
   '/js/app.js',
   '/manifest.json',
-  '/img/icono.svg'
+  '/img/icon-192.png',
+  '/img/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
