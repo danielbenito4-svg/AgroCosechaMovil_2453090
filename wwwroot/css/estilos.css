@@ -1,0 +1,177 @@
+/* estilos.css — Agroservicio La Cosecha. Diseño mobile-first. */
+* { box-sizing: border-box; }
+
+:root {
+  --verde: #2E6B30;
+  --verde-oscuro: #1F4D22;
+  --verde-claro: #EAF4E4;
+  --fondo: #F4F8EE;
+  --texto: #22331A;
+  --secundario: #5B6B52;
+  --borde: #D8E2D1;
+  --alerta: #FFF0D2;
+  --error: #FDECEA;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.45;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.barra {
+  background: linear-gradient(135deg, var(--verde-oscuro), var(--verde));
+  color: #fff;
+  padding: 1rem;
+  display: grid;
+  gap: .85rem;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+}
+
+.barra h1 { margin: .1rem 0 0; font-size: 1.35rem; }
+.marca-secundaria { margin: 0; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; opacity: .8; }
+
+.barra input,
+.formulario input {
+  width: 100%;
+  min-height: 44px;
+  padding: .7rem .8rem;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-size: 16px;
+  background: #fff;
+  color: var(--texto);
+}
+
+.barra input { border: none; }
+
+.contenedor { max-width: 1120px; margin: 0 auto; padding: 1rem; }
+.titulo-seccion { margin: .2rem 0 .65rem; font-size: 1rem; }
+
+.chips {
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+  padding-bottom: .35rem;
+  scrollbar-width: thin;
+}
+
+.chip {
+  min-height: 44px;
+  min-width: 44px;
+  border: 1px solid #AFC3A7;
+  background: #fff;
+  color: var(--verde-oscuro);
+  border-radius: 999px;
+  padding: .55rem .9rem;
+  white-space: nowrap;
+}
+
+.chip.activo { background: var(--verde); color: #fff; border-color: var(--verde); }
+
+.lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .8rem;
+  margin: 1rem 0 1.3rem;
+}
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid #E2E9DD;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 2px 7px rgba(31, 77, 34, .08);
+}
+
+.tarjeta h2 { margin: 0 0 .2rem; font-size: 1.04rem; }
+.tarjeta small { color: var(--secundario); }
+.precio { font-size: 1.22rem; margin: .65rem 0 .15rem; color: var(--verde-oscuro); }
+.existencias { margin: .15rem 0 .75rem; color: var(--secundario); }
+
+.alerta {
+  display: inline-block;
+  background: var(--alerta);
+  color: #8A4B00;
+  border-radius: 6px;
+  padding: .15rem .45rem;
+  font-size: .78rem;
+  font-weight: 650;
+}
+
+.acciones {
+  display: grid;
+  grid-template-columns: minmax(80px, 1fr) 1.6fr;
+  gap: .55rem;
+  margin-top: .7rem;
+}
+
+.acciones input {
+  min-height: 44px;
+  min-width: 0;
+  border: 1px solid var(--borde);
+  border-radius: 9px;
+  padding: .55rem;
+  font-size: 16px;
+}
+
+.boton-agregar,
+.boton-principal {
+  min-height: 44px;
+  border: none;
+  border-radius: 9px;
+  padding: .65rem .85rem;
+  font-weight: 700;
+}
+
+.boton-agregar { background: var(--verde-claro); color: var(--verde-oscuro); border: 1px solid #BDD3B3; }
+.boton-principal { background: var(--verde); color: #fff; width: 100%; }
+
+.panel-cotizacion {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid #DDE7D8;
+  box-shadow: 0 3px 12px rgba(31, 77, 34, .08);
+}
+
+.encabezado-cotizacion { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.encabezado-cotizacion h2 { margin: .1rem 0 0; }
+.contador { background: var(--verde-claro); color: var(--verde-oscuro); padding: .4rem .65rem; border-radius: 999px; font-weight: 700; white-space: nowrap; }
+
+.resumen-vacio, .resumen-lista { margin: 1rem 0; padding: .8rem; background: #F7FAF5; border-radius: 10px; }
+.resumen-lista { display: grid; gap: .4rem; }
+.fila-resumen { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px dashed #D7E2D1; padding-bottom: .35rem; }
+.fila-resumen:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.formulario { display: grid; gap: .75rem; }
+.formulario label { display: grid; gap: .3rem; font-weight: 650; }
+
+.mensaje, .respuesta { margin: 1rem 0; padding: .8rem; border-radius: 10px; }
+.error { background: var(--error); color: #8A1C13; border: 1px solid #F2C9C5; }
+.exito { background: #E9F6EA; color: #1C5A24; border: 1px solid #B8DDBD; }
+.respuesta h3 { margin: 0 0 .4rem; }
+.respuesta p { margin: .2rem 0; }
+
+footer { text-align: center; color: var(--secundario); padding: 1.5rem 1rem 2rem; font-size: .85rem; }
+
+@media (min-width: 600px) {
+  .barra { grid-template-columns: 1fr minmax(260px, 420px); align-items: center; padding: 1rem 1.4rem; }
+  .lista { grid-template-columns: repeat(2, 1fr); }
+  .formulario { grid-template-columns: 1fr 1fr; }
+  .formulario .boton-principal { grid-column: 1 / -1; }
+}
+
+@media (min-width: 900px) {
+  .lista { grid-template-columns: repeat(3, 1fr); }
+  .contenedor { padding: 1.3rem; }
+  .panel-cotizacion { padding: 1.3rem; }
+}
