@@ -1,0 +1,33 @@
+### Lista completa de insumos
+GET http://localhost:5090/api/insumos
+
+### Filtro por categoría
+GET http://localhost:5090/api/insumos?categoria=Fertilizantes
+
+### Insumo existente
+GET http://localhost:5090/api/insumos/3
+
+### Cotización válida: debe responder 201 y aplicar 5 % de descuento
+POST http://localhost:5090/api/cotizaciones
+Content-Type: application/json
+
+{
+  "cliente": "Don Pedro Xicay",
+  "telefono": "55123456",
+  "items": [
+    { "insumoId": 3, "cantidad": 4 },
+    { "insumoId": 6, "cantidad": 2 }
+  ]
+}
+
+### Existencias insuficientes: debe responder 400
+POST http://localhost:5090/api/cotizaciones
+Content-Type: application/json
+
+{
+  "cliente": "Doña Marta",
+  "telefono": "44556677",
+  "items": [
+    { "insumoId": 7, "cantidad": 9 }
+  ]
+}
